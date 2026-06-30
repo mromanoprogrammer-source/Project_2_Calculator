@@ -11,6 +11,10 @@
 // Forward declaration of CalculatorUI class
 class CalculatorUI {
 public:
+    void pause();
+    void renderCenteredMenu(HANDLE h);
+    void highlightOption(HANDLE h, int option);
+    void showFooter(HANDLE h);
     void transition(HANDLE h);
     void showResult(HANDLE h, double result);
     int getConsoleWidth();

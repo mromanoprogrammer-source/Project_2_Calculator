@@ -1,5 +1,7 @@
-// This file implements the main application logic for the calculator, including the main loop, user input handling,
-// and interaction with the UI and sound manager.
+// This file implements the CalculatorApp class, which serves as the main application class for the calculator application.
+// It includes all necessary components such as the user interface, input management, calculation engine, history management,
+// theme management, and sound management. It also handles the memory functions and special options like changing themes and
+// exiting the application.
 
 #include <iostream>
 #include <cmath>
@@ -42,13 +44,45 @@ void CalculatorApp::run() {
 
         ui.transition(h);
 
-        /*effects.fadeOut(5, 100);
-        ui.clearScreen(h);
-        effects.loadingBar(1000);*/
-
-        ui.renderMenu(h);
+        ui.renderCenteredMenu(h);
 
         int choice = input.getMenuChoice(h, sound);
+		ui.highlightOption(h, choice); // Highlight the selected option in the menu 
+
+        // Memory functions
+        if (choice == 11) {
+            double value = input.getValidNumber(h, "Enter value to add to memory: ", sound);
+            engine.addToMemory(value);
+            sound.playSuccessSound();
+            ui.printCentered(L"Value added to memory.");
+            ui.pause();   // lets user press ENTER
+            continue;
+        }
+
+        if (choice == 12) {
+            double value = input.getValidNumber(h, "Enter value to subtract from memory: ", sound);
+            engine.subtractFromMemory(value);
+            sound.playSuccessSound();
+            ui.printCentered(L"Value subtracted from memory.");
+            ui.pause();   // lets user press ENTER
+            continue;
+        }
+
+        if (choice == 13) {
+            double mem = engine.getMemory();
+            sound.playSuccessSound();
+            ui.showResult(h, mem);
+            ui.pause();   // lets user press ENTER
+            continue;
+        }
+
+        if (choice == 14) {
+            engine.clearMemory();
+            sound.playSuccessSound();
+            ui.printCentered(L"Memory cleared.");
+            ui.pause();   // lets user press ENTER
+            continue;
+        }
 
         // Handle special options
         if (choice == 10) {

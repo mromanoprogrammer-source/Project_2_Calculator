@@ -55,16 +55,16 @@ int InputManager::getMenuChoice(HANDLE h, SoundManager& sound) {
     
     int choice;
 
-    ui.printWide(L"Choose an operation (1-10): ");
+    ui.printWide(L"Choose an operation (1-14): ");
     cin >> choice;
 
-    while (cin.fail() || choice < 1 || choice > 10) {
+    while (cin.fail() || choice < 1 || choice > 14) {
         sound.playErrorSound();
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         SetConsoleTextAttribute(h, currentTheme.errorColor);
-        cout << "Invalid choice. Please enter a number between 1 and 10: ";
+        cout << "Invalid choice. Please enter a number between 1 and 14: ";
         SetConsoleTextAttribute(h, 7);
 
         cin >> choice;
